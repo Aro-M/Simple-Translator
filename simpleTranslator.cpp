@@ -232,8 +232,7 @@ void readWord ()
   read.open ("allWords.txt");
   while (!read.eof ())
     {
-      read >> words.id;
-      read.ignore ();
+    
       getline (read, words.enlang);
       getline (read, words.armlang);
       print (words);
