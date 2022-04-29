@@ -16,7 +16,7 @@ void armfrom ();
 
 struct Languages
 {
-  int id;
+
     std::string enlang;
     std::string armlang;
 
