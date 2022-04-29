@@ -12,11 +12,12 @@ void delWord  ();
 void fromLanguages ();
 void fromEng ();
 void armfrom ();
+void editWords ();
 
 
 struct Languages
 {
-
+    
     std::string enlang;
     std::string armlang;
 
@@ -172,11 +173,12 @@ void choose_version()
   int i = 4;
   while (i > 0)
     {
+      int choie;
       std::cout << "1.Add Words" << std::endl;
       std::cout << "2.read Words" << std::endl;
       std::cout << "3.del Words" << std::endl;
-      int choie;
-      std::cout << "Enter choie  " << std::endl;
+      std::cout << "4.edit Words" << std::endl;
+      std::cout << "Enter choose  " << std::endl;
       std::cin >> choie;
       switch (choie)
 	    {
@@ -189,7 +191,9 @@ void choose_version()
 	case 3:
 	  delWord  ();
 	  break;
-
+    case 4:
+      editWords ();
+      break;
     	}
     }
   --i;
@@ -232,7 +236,6 @@ void readWord ()
   read.open ("allWords.txt");
   while (!read.eof ())
     {
-    
       getline (read, words.enlang);
       getline (read, words.armlang);
       print (words);
@@ -272,7 +275,6 @@ void delWord  ()
 	    {
 	      write << words.enlang << std::endl;
 	      write << words.armlang << std::endl;
-
 	      break;
 	    }
 	}
@@ -284,10 +286,51 @@ void delWord  ()
 
 }
 
+void editWords(){
+    
+    std::cout << "You want to update record (y/n) : ";
+    char choice;
+    std::cin >> choice;
+    if (choice == 'y') {
+        std::string pair;
+        std::cout << "Enter your English word which you are want to edit"<<std::endl;
+        std::cin  >> pair;
+        Languages newWords;
+        getline(std::cin, newWords.enlang);
+        getline(std::cin,newWords.armlang);
+        Languages words;
+        std::ofstream tempFile;
+        tempFile.open("temp.txt");
+        std::ifstream read;
+        read.open("allWords.txt");
+        while (!read.eof()) {
+            getline(read, words.enlang);
+            getline(read, words.armlang);
+            if (words.enlang != pair) {
+                tempFile << words.enlang<<std::endl;
+                tempFile << words.armlang<<std::endl;
+               
+            }
+            else {
+                
+                tempFile << newWords.armlang;
+                tempFile << newWords.enlang;
+              
+            }
+        }
+        read.close();
+        tempFile.close();
+        remove("allWords.txt");
+        rename("temp.txt", "allWords.txt");
+        std::cout << "Successfuly"<<std::endl;
+    }
+    else {
+        std::cout << "UnSuccessfuly"<<std::endl;
+    }
 
+}
 int main ()
 {
   sendName ();
 
 }
-
