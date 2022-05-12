@@ -2,56 +2,64 @@
 #include <fstream>
 #include<string>
 
-void simpleTranslator (std::string name);
-void adminTranslator ();
-void userTranslator ();
-void choose_version();
+void simpleTranslator ();
+void adminTranslator (std::string);
+void userTranslator (std::string);
+void chooseVersion();
 void addWords ();
 void readWord ();
 void delWord  ();
 void fromLanguages ();
 void fromEng ();
-void armfrom ();
+void armFrom ();
 void editWords ();
 
 
 struct Languages
 {
     
-    std::string enlang;
-    std::string armlang;
+    std::string enLang;
+    std::string armLang;
 
 };
 
-void sendName ()
-{
-  std::cout << "You are admin or user ";
-  std::string name;
-  getline (std::cin, name);
-  simpleTranslator (name);
+
+void simpleTranslator ()
+{   std::cout << "You are admin or user ";
+    std::string name;
+    std::system ("clear");
+    do{
+     std::cin>> name;
+   for(int i = 0; i < name.length();++i){
+  
+        if(name[i] >= 65 && name[i] <= 90) {
+            name[i] += 32; 
+           }
+       
+   if (name == "admin")
+        {
+             
+                adminTranslator (name);
+        }
+      if(name[i] >= 65 && name[i] <= 90)
+        {
+            name[i] += 32;
+            
+        } 
+        if (name == "user")
+            {
+            
+               userTranslator ( name);
+            }
+    }   
+    std::system ("clear");
+   std::cout << "You entered incorrectly: Please try again"<<std::endl;
+   
+  } while(name != "admin" && name != "user"); 
 }
 
-void simpleTranslator (std::string name)
-{
-
-  if (name == "admin")
-    {
-      std::cout << "You are " << name << std::endl;
-      adminTranslator ();
-    }
-  else if (name == "user")
-    {
-      std::cout << "You are  " << name << std::endl;
-      userTranslator ();
-    }
-  else
-    {
-      std::cout << "You entered incorrectly: Please try again";
-    }
-}
-
-void userTranslator ()
-{
+void userTranslator (std::string name)
+{ std::cout << "You are  " << name << std::endl;
   std::cout << "\e[1m" << "Attention " << "\e[0m" <<
     "Must contain only numbers and " << "lowercase letters and must contain"
     << " a minimum of 8 characters and a maximum of 16 characters" << std::endl;
@@ -59,24 +67,44 @@ void userTranslator ()
     " password " << std::endl;
   std::string passwordUser;
   std::string correctPassword = "user19982022";
-  std::cin >> passwordUser;
-  std::system ("clear");
-  if (passwordUser.length () <= 8 || passwordUser.length () >= 16)
-    {
-      std::cout << "you are  inccorect ";
-    }
+  
+  do{
+  
+  std::cout << "Please enter password " << std::endl;
+  
+  std::cin>>passwordUser;
+   std::system ("clear");
+          if (passwordUser.length () <= 8 || passwordUser.length () >= 16)
+         {
+             if(passwordUser != correctPassword)
+             {
+              std::cout << "You are  inccorect " <<std::endl;
+             }
+         }
+         for(int i = 0; i < passwordUser.length() ; ++i) 
+         {
+          if(passwordUser[i] >= 65 && passwordUser[i] <= 90)
+          {
+             passwordUser[i] += 32;
+          }
+       
+         }
+  
+  }while(correctPassword != passwordUser);
+  
   if (passwordUser == correctPassword)
     {
-      std::cout << "you  are " << "\e[1m" << "User " << "\e[0m" << std::endl;
+        
+      std::cout << "You  are " << "\e[3m" << "User " << "\e[0m" << std::endl;
 
       fromLanguages ();
     }
 
 }
 
-void adminTranslator()
+void adminTranslator(std::string name)
 {
-
+  std::cout << "You are  " << name << std::endl;
   std::cout << "\e[2m" << "Attention " << "\e[0m" <<
     "Must contain only numbers and " << "lowercase letters and must contain"
     << " a minimum of 8 characters and a maximum of 16 characters" << std::endl;
@@ -84,17 +112,33 @@ void adminTranslator()
     " password" << std::endl;
   std::string passwordAdmin;
   std::string correctPassword = "admin19982022";
-  std::cin >> passwordAdmin;
+  do{
+  
+  std::cout << "Please enter password " << std::endl;
+  std::cin>>passwordAdmin;
   std::system ("clear");
-  if (passwordAdmin.length () <= 8 || passwordAdmin.length () >= 16)
-    {
-      std::cout << "you are  inccorect ";
-    }
+   if (passwordAdmin.length () <= 8 || passwordAdmin.length () >= 16)
+         {
+             if(passwordAdmin != correctPassword)
+             {
+               std::cout << "You are  inccorect " <<std::endl;
+             }
+         }
+         for(int i = 0; i < passwordAdmin.length() ; ++i){
+             
+          if(passwordAdmin[i] >= 65 && passwordAdmin[i] <= 90)
+          {
+                passwordAdmin[i] += 32;
+          }
+       
+       }
+  
+    }while(correctPassword != passwordAdmin);
   if (passwordAdmin == correctPassword)
     {
       std::cout << "You are " << "\e[1m" << "Admin" << "\e[0m" << std::endl;
 
-      choose_version();
+      chooseVersion();
 
     }
   else
@@ -117,7 +161,7 @@ void fromLanguages ()
     }
   else if (ch == 2)
     {
-      armfrom ();
+      armFrom ();
     }
   else
     {
@@ -136,17 +180,17 @@ void fromEng ()
   read.open ("allWords.txt");
   while (!read.eof ())
  {
-      getline (read, words.enlang);
-      getline (read, words.armlang);
-      if (words.enlang == wordsEngName)
+      getline (read, words.enLang);
+      getline (read, words.armLang);
+      if (words.enLang == wordsEngName)
 	 {
-	  std::cout << " This is Armenian word " << words.armlang << std::endl;
+	  std::cout << " This is Armenian word " << words.armLang << std::endl;
 
 	 }
   }
 }
 
-void armfrom ()
+void armFrom ()
 {
   std::string wordsArmName;
   std::cout << "Enter word  want to search : " << std::endl;
@@ -156,11 +200,11 @@ void armfrom ()
   read.open ("allWords.txt");
   while (!read.eof ())
     {
-      getline (read, words.enlang);
-      getline (read, words.armlang);
-      if (words.armlang == wordsArmName)
+      getline (read, words.enLang);
+      getline (read, words.armLang);
+      if (words.armLang == wordsArmName)
      	{
-	  std::cout << "" << words.enlang << std::endl;
+	  std::cout << "" << words.enLang << std::endl;
 
 
      	}
@@ -168,7 +212,7 @@ void armfrom ()
 }
 
 
-void choose_version()
+void chooseVersion()
 {
   int i = 4;
   while (i > 0)
@@ -179,7 +223,9 @@ void choose_version()
       std::cout << "3.del Words" << std::endl;
       std::cout << "4.edit Words" << std::endl;
       std::cout << "Enter choose  " << std::endl;
+     
       std::cin >> choie;
+     
       switch (choie)
 	    {
 	case 1:
@@ -204,28 +250,38 @@ void addWords ()
 {
 
   Languages words;
-  std::cout << "Enter English Words : " << std::endl;
-  std::cin.get ();
-  std::getline (std::cin, words.enlang);
-  std::cout << "Enter Armenian Words : " << std::endl;
-  std::cin >> words.armlang;
-
-
+  do{
+  
+      std::cout << "Enter English Words : " << std::endl;
+  
+      // get(std::cin,words.enLang);
+     std::cin >> words.enLang;
+      //std::cin.get();
+      //std::getline (std::cin, words.enLang);
+      std::cout << "Enter Armenian Words : " << std::endl;
+     // get(std::cin,words.armLang);
+     // std::getline(std::cin , words.armLang);
+    std::cin >> words.armLang;
+     // std::cin.get();
   std::ofstream write;
   write.open ("allWords.txt", std::ios::app);
 
-  write << words.enlang << std::endl;
-  write << words.armlang << std::endl;
+  
+  write << words.enLang << std::endl;
+  write << words.armLang << std::endl;
   write.close ();
+  if(words.enLang.length() ==  0 || words.armLang.length() == 0){
+      std::cout << "It is not allowed to leave an empty field or one character"<<std::endl;
+  }
+ }while(words.enLang.length() ==  0 || words.armLang.length() == 0);
 
 }
 
-void
-print (Languages s)
+void print (Languages s)
 {
- 
-  std::cout << "English is word : " << s.enlang << std::endl;
-  std::cout << "Armenian is word : " << s.armlang << std::endl;
+  
+  std::cout << "English is word : " << s.enLang << std::endl;
+  std::cout << "Armenian is word : " << s.armLang << std::endl;
 
 }
 
@@ -234,13 +290,13 @@ void readWord ()
   Languages words;
   std::ifstream read;
   read.open ("allWords.txt");
-  while (!read.eof ())
+  while (getline (read, words.enLang) &&
+      getline (read, words.armLang))
     {
-      getline (read, words.enlang);
-      getline (read, words.armlang);
-      print (words);
-    }
-  read.close ();
+      
+     print (words);
+    } 
+  //read.close ();
 }
 
 
@@ -261,20 +317,20 @@ void delWord  ()
       write.open ("allWords.txt", std::ios::app);
       while (!read.eof ())
 	{
-	  getline (read, words.enlang);
-	  getline (read, words.armlang);
-	  if (words.enlang != delEng)
+	  getline (read, words.enLang);
+	  getline (read, words.armLang);
+	  if (words.enLang != delEng)
 	    {
 
-	      temp << words.enlang << std::endl;
-	      temp << words.armlang << std::endl;
+	      temp << words.enLang << std::endl;
+	      temp << words.armLang << std::endl;
 	      break;
 
 	    }
 	  else
 	    {
-	      write << words.enlang << std::endl;
-	      write << words.armlang << std::endl;
+	      write << words.enLang << std::endl;
+	      write << words.armLang << std::endl;
 	      break;
 	    }
 	}
@@ -296,25 +352,25 @@ void editWords(){
         std::cout << "Enter your English word which you are want to edit"<<std::endl;
         std::cin  >> pair;
         Languages newWords;
-        getline(std::cin, newWords.enlang);
-        getline(std::cin,newWords.armlang);
+        getline(std::cin, newWords.enLang);
+        getline(std::cin,newWords.armLang);
         Languages words;
         std::ofstream tempFile;
         tempFile.open("temp.txt");
         std::ifstream read;
         read.open("allWords.txt");
         while (!read.eof()) {
-            getline(read, words.enlang);
-            getline(read, words.armlang);
-            if (words.enlang != pair) {
-                tempFile << words.enlang<<std::endl;
-                tempFile << words.armlang<<std::endl;
+            getline(read, words.enLang);
+            getline(read, words.armLang);
+            if (words.enLang != pair) {
+                tempFile << words.enLang<<std::endl;
+                tempFile << words.armLang<<std::endl;
                
             }
             else {
                 
-                tempFile << newWords.armlang;
-                tempFile << newWords.enlang;
+                tempFile << newWords.armLang;
+                tempFile << newWords.enLang;
               
             }
         }
@@ -331,6 +387,6 @@ void editWords(){
 }
 int main ()
 {
-  sendName ();
+  simpleTranslator ();
 
 }
